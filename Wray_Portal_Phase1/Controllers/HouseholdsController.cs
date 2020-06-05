@@ -30,7 +30,14 @@ namespace Wray_Portal_Phase1.Controllers
         public ActionResult Dashboard()
         {
             var houseId = db.Users.Find(User.Identity.GetUserId()).HouseholdId;
+
             var house = db.Households.Include(h => h.BankAccounts).Include(h => h.Notifications).FirstOrDefault(h => h.Id == houseId);
+
+            if (User.IsInRole("Owner"))
+            {
+
+                //var houseTransactions = db.BankAccounts.Where(b => b.HouseholdId == house.Id).SelectMany(t => t.Transactions).ToList();
+            }
 
             // Setup the necessary data for the wizard
             ViewBag.AccountType = new SelectList(db.BankAccountTypes, "Id", "Type");

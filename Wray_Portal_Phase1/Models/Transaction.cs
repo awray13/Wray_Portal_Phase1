@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,12 +10,16 @@ namespace Wray_Portal_Phase1.Models
     {
         public int Id { get; set; }
 
+        [Display(Name = "Transaction Type")]
         public int TransactionTypeId { get; set; }
 
+        [Display(Name = "Bank Account")]
         public int BankAccountId { get; set; }
 
+        [Display(Name = "Category Item")]
         public int? CategoryItemId { get; set; }
 
+        [Display(Name = "Owner")]
         public string OwnerId { get; set; }
 
         public decimal Amount { get; set; }

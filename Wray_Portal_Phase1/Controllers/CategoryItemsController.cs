@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -10,6 +11,7 @@ using Wray_Portal_Phase1.Models;
 
 namespace Wray_Portal_Phase1.Controllers
 {
+    [Authorize(Roles = "Owner, Member")]
     public class CategoryItemsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -17,8 +19,9 @@ namespace Wray_Portal_Phase1.Controllers
         // GET: CategoryItems
         public ActionResult Index()
         {
-            var categoryItems = db.CategoryItems.Include(c => c.Category);
-            return View(categoryItems.ToList());
+            var houseId = db.Users.Find(User.Identity.GetUserId()).HouseholdId;
+            var categoryItems = db.Categories.Where(c => c.HouseholdId == houseId).SelectMany(c => c.CategoryItems).ToList();
+            return View(categoryItems);
         }
 
         // GET: CategoryItems/Details/5

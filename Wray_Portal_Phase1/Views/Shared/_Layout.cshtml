@@ -23,7 +23,7 @@
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-    
+
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="~/Images/favicon-32x32.png" />
@@ -64,7 +64,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">15</span>
+                        <span class="badge badge-info navbar-badge">15</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <span class="dropdown-item dropdown-header">15 Notifications</span>
@@ -255,24 +255,87 @@
                 options: donutOptions
             });
         });
-            //-------------
-            //- PIE CHART -
-            //-------------
-            // Get context with jQuery - using jQuery's .get() method.
-            //var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
-            //var pieData = donutData;
-            //var pieOptions = {
-            //    maintainAspectRatio: false,
-            //    responsive: true,
-            //};
-            //Create pie or douhnut chart
-            // You can switch between pie and douhnut using the method below.
-        //    var pieChart = new Chart(pieChartCanvas, {
-        //        type: 'pie',
-        //        data: pieData,
-        //        options: pieOptions
-        //    });
-        //});
+    </script>
+
+    <script>
+        //-------------
+        //- BAR CHART -
+        //-------------
+        @*$.ajax({
+            type: "POST",
+            url: '@Url.Action("GetCategoryChartData", "Charts")',
+            dataType: "json"
+        }).then(function (response) {*@
+        $(function () {
+            var areaChartData = {
+                labels: ['Transportation', 'Food', 'Enterainment', 'Medicine', 'May', 'June', 'July'],
+                datasets: [
+                    {
+                        label: 'Actual',
+                        backgroundColor: 'rgba(60,141,188,0.9)',
+                        borderColor: 'rgba(60,141,188,0.8)',
+                        pointRadius: false,
+                        pointColor: '#3b8bba',
+                        pointStrokeColor: 'rgba(60,141,188,1)',
+                        pointHighlightFill: '#fff',
+                        pointHighlightStroke: 'rgba(60,141,188,1)',
+                        data: [28, 48, 40, 19, 86, 27, 90]
+                    },
+                    {
+                        label: 'Target',
+                        backgroundColor: 'rgba(210, 214, 222, 1)',
+                        borderColor: 'rgba(210, 214, 222, 1)',
+                        pointRadius: false,
+                        pointColor: 'rgba(210, 214, 222, 1)',
+                        pointStrokeColor: '#c1c7d1',
+                        pointHighlightFill: '#fff',
+                        pointHighlightStroke: 'rgba(220,220,220,1)',
+                        data: [65, 59, 80, 81, 56, 55, 40]
+                    },
+                ]
+            };
+
+            var areaChartOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+                legend: {
+                    display: false
+                },
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display: false,
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            display: false,
+                        }
+                    }]
+                }
+            };
+
+            var barChartCanvas = $('#barChart').get(0).getContext('2d');
+
+            var barChartData = jQuery.extend(true, {}, areaChartData);
+            var temp0 = areaChartData.datasets[0];
+            var temp1 = areaChartData.datasets[1];
+            barChartData.datasets[0] = temp1;
+            barChartData.datasets[1] = temp0;
+
+            var barChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                datasetFill: false
+            };
+
+            var barChart = new Chart(barChartCanvas, {
+                type: 'bar',
+                data: barChartData,
+                options: barChartOptions
+            });
+        });
+
     </script>
 
     <script>

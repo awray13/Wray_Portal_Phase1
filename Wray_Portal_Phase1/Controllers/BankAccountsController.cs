@@ -17,7 +17,10 @@ namespace Wray_Portal_Phase1.Controllers
         // GET: BankAccounts
         public ActionResult Index()
         {
+
             var bankAccounts = db.BankAccounts.Include(b => b.BankAccountType).Include(b => b.Household);
+            
+
             return View(bankAccounts.ToList());
         }
 

@@ -172,6 +172,7 @@
     <Compile Include="Controllers\BankAccountTypesController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CategoryItemsController.cs" />
+    <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HouseholdsController.cs" />
     <Compile Include="Controllers\InvitationsController.cs" />
@@ -203,6 +204,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\EmailVM.cs" />
     <Compile Include="ViewModels\InvitationVM.cs" />
+    <Compile Include="ViewModels\MorrisCatBarData.cs" />
     <Compile Include="ViewModels\UserProfileVM.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -372,6 +374,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Charts\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

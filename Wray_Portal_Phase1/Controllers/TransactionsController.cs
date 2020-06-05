@@ -78,6 +78,8 @@ namespace Wray_Portal_Phase1.Controllers
                 }
                 db.SaveChanges();
 
+
+
                 // Do I need to generate a Notification for either an overdraft Or a low balance breach...?
                 notificationHelper.ManageNotifications(bank, transaction);
 
