@@ -1,0 +1,304 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>Budget Duck</title>
+
+    <!-- Font Awesome Icons -->
+    <link href="~/Content/all.min.css" rel="stylesheet" />
+
+    <!-- overlayScrollbars -->
+    <link href="~/Content/OverlayScrollbars.min.css" rel="stylesheet" />
+
+    <!-- DataTables -->
+    <link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/Content/responsive.bootstrap4.min.css" rel="stylesheet" />
+
+    <!-- Theme style -->
+    <link href="~/Content/adminlte.min.css" rel="stylesheet" />
+
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/Images/favicon-32x32.png" />
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-sm-footer-not-fixed">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="index3.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Contact</a>
+                </li>
+            </ul>
+
+            <!-- SEARCH FORM -->
+            <form class="form-inline ml-3">
+                <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-navbar" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Notifications Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-bell"></i>
+                        <span class="badge badge-warning navbar-badge">15</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <span class="dropdown-item dropdown-header">15 Notifications</span>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-envelope mr-2"></i> 4 new messages
+                            <span class="float-right text-muted text-sm">3 mins</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-users mr-2"></i> 8 friend requests
+                            <span class="float-right text-muted text-sm">12 hours</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-file mr-2"></i> 3 new reports
+                            <span class="float-right text-muted text-sm">2 days</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <span class="text-muted text-uppercase text-sm">User Actions</span>
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                        <span class="dropdown-item dropdown-header">User Actions</span>
+                        <div class="dropdown-divider"></div>
+                        <a href="@Url.Action("About", "Home")" class="dropdown-item">
+                            <i class="fas fa-user mr-2"></i> Profile
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        @if (Request.IsAuthenticated)
+                        {
+                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item">
+                                    <i class="fas fa-door-open mr-2"></i>Log Out
+                                </a>
+                            }
+                        }
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+        <!-- Side Nav Partial View -->
+        @Html.Action("_SideNav", "Households")
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-content">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer class="main-footer small">
+            <div class="layout-sm-footer-not-fixed">
+                <strong>Copyright &copy; @DateTime.Now.Year.  <a href="//ashtondwray-portfolio.azurewebsites.net/" target="_blank" class="text-orange">Ashton Wray</a>.</strong>
+                All rights reserved.
+            </div>
+        </footer>
+    </div>
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery -->
+    <script src="~/Scripts/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+
+    <!-- overlayScrollbars -->
+    <script src="~/Scripts/jquery.overlayScrollbars.min.js"></script>
+
+    <!-- bs-custom-file-input -->
+    <script src="~/Scripts/bs-custom-file-input.min.js"></script>
+
+
+    <!-- DataTables -->
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/dataTables.responsive.min.js"></script>
+    <script src="~/Scripts/responsive.bootstrap4.min.js"></script>
+
+    <!-- ChartJS -->
+    <script src="~/Scripts/Chart.min.js"></script>
+
+    <!-- AdminLTE App -->
+    @*<script src="~/Scripts/adminlte.js"></script>*@
+    <script src="~/Scripts/adminlte.min.js"></script>
+
+    <!-- PAGE PLUGINS -->
+    <!-- jQuery Mapael -->
+    <script src="~/Scripts/jquery.mousewheel.js"></script>
+    <script src="~/Scripts/raphael.min.js"></script>
+    <script src="~/Scripts/jquery.mapael.min.js"></script>
+    <script src="~/Scripts/usa_states.min.js"></script>
+
+
+
+    <!-- Sweet Alerts -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <script>
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetTicketPriorityChartData", "Chart")',
+            dataType: "json"
+        }).then(function (response) {
+            var donutChartCanvas = $('#pieChart').get(0).getContext('2d');
+            var donutData = {
+                labels: response.Labels,
+                datasets: [
+                    {
+                        data: response.Data,
+                        backgroundColor: response.Colors
+                    }
+                ]
+            };
+            var donutOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+            };
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var pieChart = new Chart(donutChartCanvas, {
+                type: 'pie',
+                data: donutData,
+                options: donutOptions
+            });
+        });
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetTicketStatusChartData", "Chart")',
+            dataType: "json"
+        }).then(function (response) {
+            var donutChartCanvas = $('#pieChart2').get(0).getContext('2d');
+            var donutData = {
+                labels: response.Labels,
+                datasets: [
+                    {
+                        data: response.Data,
+                        backgroundColor: response.Colors
+                    }
+                ]
+            };
+            var donutOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+            };
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var pieChart = new Chart(donutChartCanvas, {
+                type: 'pie',
+                data: donutData,
+                options: donutOptions
+            });
+        });
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetTicketTypeChartData", "Chart")',
+            dataType: "json"
+        }).then(function (response) {
+            var donutChartCanvas = $('#pieChart3').get(0).getContext('2d');
+            var donutData = {
+                labels: response.Labels,
+                datasets: [
+                    {
+                        data: response.Data,
+                        backgroundColor: response.Colors
+                    }
+                ]
+            };
+            var donutOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+            };
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var pieChart = new Chart(donutChartCanvas, {
+                type: 'pie',
+                data: donutData,
+                options: donutOptions
+            });
+        });
+            //-------------
+            //- PIE CHART -
+            //-------------
+            // Get context with jQuery - using jQuery's .get() method.
+            //var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
+            //var pieData = donutData;
+            //var pieOptions = {
+            //    maintainAspectRatio: false,
+            //    responsive: true,
+            //};
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+        //    var pieChart = new Chart(pieChartCanvas, {
+        //        type: 'pie',
+        //        data: pieData,
+        //        options: pieOptions
+        //    });
+        //});
+    </script>
+
+    <script>
+        $(function () {
+            $("table").DataTable({
+                "responsive": true,
+                "autoWidth": false,
+            });
+            $("#example1").DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            bsCustomFileInput.init();
+        });
+    </script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
