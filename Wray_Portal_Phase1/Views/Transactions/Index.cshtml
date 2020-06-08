@@ -4,66 +4,68 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="container-fluid">
+    <h2>Transaction Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.BankAccount.OwnerId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CategoryItem.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Owner.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TransactionType.Type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Amount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Memo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Created)
-        </th>
-        <th></th>
-    </tr>
+    <p>
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-warning text-white" })
+    </p>
+    <div class="card card-info">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.BankAccount.OwnerId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CategoryItem.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Owner.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TransactionType.Type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Amount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Memo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName("Category Item")
+                    </th>
+                    <th>
+                        @Html.DisplayName("FirstName")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Transaction Type")
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Amount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Memo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Created)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CategoryItem.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Owner.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TransactionType.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Memo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Created)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

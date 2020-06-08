@@ -1,4 +1,7 @@
-﻿
+﻿@using Wray_Portal_Phase1.ViewModels
+@model UserProfileVM
+
+
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
@@ -6,7 +9,7 @@
             <div class="col-sm-6">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <h1><strong>@Model.FirstName's Profile</strong></h1>
+                    <h1><strong>@Model.'s Profile</strong></h1>
                 }
             </div>
             <div class="col-sm-6">

@@ -45,6 +45,47 @@ namespace Wray_Portal_Phase1.Controllers
             return View(house);
         }
 
+        public async Task<ActionResult> LeaveAsync()
+        {
+            var userId = User.Identity.GetUserId();
+
+            var myRole = roleHelper.ListUserRoles(userId).FirstOrDefault();
+            var user = db.Users.Find(userId);
+
+            switch (myRole)
+            {
+                case "Owner":
+
+                    var members = db.Users.Where(u => u.HouseholdId == user.HouseholdId).Count() - 1;
+                    if (members >= 1)
+                    {
+                        TempData["Message"] = $"You are unable to leave the Household! There are still <b>{members}</b> other members in the house, you must select one of them to assume your role.";
+                        return RedirectToAction("ExitDenied");
+                    }
+                    user.Household.IsDeleted = true;
+                    user.HouseholdId = null;
+                    db.SaveChanges();
+
+                    roleHelper.RemoveUserFromRole(userId, "Owner");
+                    roleHelper.AddUserToRole(userId, "NewUser");
+                    await HttpContextBaseExtension.RefreshAuthentication(HttpContext, user);
+
+                    return RedirectToAction("Dashboard", "Households");
+
+                case "Member":
+                default:
+                    user.HouseholdId = null;
+                    db.SaveChanges();
+
+                    roleHelper.RemoveUserFromRole(userId, "Member");
+                    roleHelper.AddUserToRole(userId, "NewUser");
+                    await HttpContextBaseExtension.RefreshAuthentication(HttpContext, user);
+
+                    return RedirectToAction("Dashboard", "Households");
+            }
+
+        }
+
 
         public ActionResult Join()
         {

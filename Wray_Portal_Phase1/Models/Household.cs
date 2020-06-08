@@ -15,6 +15,8 @@ namespace Wray_Portal_Phase1.Models
 
         public string Greeting { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         // Navigation
         public virtual ICollection<ApplicationUser> Members { get; set; }
         public virtual ICollection<BankAccount> BankAccounts { get; set; }

@@ -15,34 +15,40 @@ namespace Wray_Portal_Phase1.Controllers
         // GET: Charts
         public JsonResult GetCategoryChartData()
         {
-            var dataVM = new CatDataVM();
+            var colorList = new List<string>();
+            colorList.Add("#886896");
+            colorList.Add("#d2d6de");
 
+            var catDataVM = new CatDataVM();
             var householdId = db.Users.Find(User.Identity.GetUserId()).HouseholdId;
+
             foreach (var category in db.Categories.Where(c => c.HouseholdId == householdId).ToList())
             {
-                // Now that I have a Category I need all the category items
-                var catItems = db.Categories.Find(category.Id).CategoryItems.ToList();
-                decimal actual = 0;
-                foreach (var item in catItems)
+                var catData = new CategoryDataVM
                 {
+                    Name = category.Name,
+                    Target = category.TargetAmount
+                };
+
+                foreach (var item in db.Categories.Find(category.Id).CategoryItems.ToList())
+                {
+                    // This should be focused on the current month only!!!
+                    // How do I work down the Transactions to only this month??
+                    // Where(t = t.Created) is a good place to start
                     var transactions = db.Transactions.Where(t => t.CategoryItemId == item.Id).ToList();
-                    if (transactions != null)
+                    if (transactions.Count > 0)
                     {
-                        actual += transactions.Sum(t => t.Amount);
+                        catData.Actual += transactions.Sum(t => t.Amount);
                     }
                 }
 
-                var catData = new MorrisCatBarData
-                {
-                    Category = category.Name,
-                    Target = category.TargetAmount,
-                    Actual = actual
-                };
-
-                dataVM.Data.Add(catData);
-                dataVM.Labels.Add(category.Name);
+                catDataVM.Data.Add(catData);
+                catDataVM.Colors.AddRange(colorList);
             }
-            return Json(dataVM);
+
+            catDataVM.Labels.AddRange(new List<string> { "Target", "Actual", "Name" });
+
+            return Json(catDataVM);
         }
     }
 }

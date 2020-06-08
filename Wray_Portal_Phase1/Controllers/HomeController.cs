@@ -9,6 +9,7 @@ using Wray_Portal_Phase1.ViewModels;
 
 namespace Wray_Portal_Phase1.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -22,9 +23,17 @@ namespace Wray_Portal_Phase1.Controllers
         [Authorize]
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            var currentUserId = User.Identity.GetUserId();
 
-            return View();
+            var currentUser = db.Users.Find(currentUserId);
+            var userProfileVM = new UserProfileVM();
+            userProfileVM.Id = currentUser.Id;
+            userProfileVM.FirstName = currentUser.FirstName;
+            userProfileVM.LastName = currentUser.LastName;
+            userProfileVM.DisplayName = currentUser.DisplayName;
+            userProfileVM.Email = currentUser.Email;
+
+            return View(userProfileVM);
         }
 
         [Authorize]
