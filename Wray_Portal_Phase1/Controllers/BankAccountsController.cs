@@ -52,10 +52,11 @@ namespace Wray_Portal_Phase1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,HouseholdId,BankAccountTypeId,OwnerId,Created,Name,StartingBalance,CurrentBalance,LowBalanceLevel")] BankAccount bankAccount)
+        public ActionResult Create([Bind(Include = "HouseholdId,BankAccountTypeId,Name,StartingBalance,CurrentBalance,LowBalanceLevel")] BankAccount bankAccount)
         {
             if (ModelState.IsValid)
             {
+                bankAccount.Created = DateTime.Now;
                 db.BankAccounts.Add(bankAccount);
                 db.SaveChanges();
                 return RedirectToAction("Index");

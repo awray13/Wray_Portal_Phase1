@@ -180,10 +180,12 @@
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\TransactionTypesController.cs" />
+    <Compile Include="Enums\ProjectSetting.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Extensions\HttpContextBaseExtension.cs" />
+    <Compile Include="Helper\LayoutHelper.cs" />
     <Compile Include="Helper\NotificationHelper.cs" />
     <Compile Include="Helper\StringUtilities.cs" />
     <Compile Include="Helper\UserRoleHelper.cs" />
