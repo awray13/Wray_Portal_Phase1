@@ -45,6 +45,7 @@ namespace Wray_Portal_Phase1.Controllers
             return View(house);
         }
 
+        // Leave Household
         public async Task<ActionResult> LeaveAsync()
         {
             var userId = User.Identity.GetUserId();

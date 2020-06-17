@@ -12,7 +12,7 @@ using Wray_Portal_Phase1.Models;
 
 namespace Wray_Portal_Phase1.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Owner, Member")]
     public class TransactionsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -21,8 +21,11 @@ namespace Wray_Portal_Phase1.Controllers
         // GET: Transactions
         public ActionResult Index()
         {
-            var transactions = db.Transactions.Include(t => t.BankAccount).Include(t => t.CategoryItem).Include(t => t.Owner).Include(t => t.TransactionType);
-            return View(transactions.ToList());
+            
+            var houseId = db.Users.Find(User.Identity.GetUserId()).HouseholdId;
+            var transactions = db.Transactions.Where(b => b.BankAccountId == houseId).Include(t => t.BankAccount).Include(t => t.CategoryItem).Include(t => t.Owner).Include(t => t.TransactionType).ToList();
+           
+            return View(transactions);
         }
 
         // GET: Transactions/Details/5
@@ -68,9 +71,12 @@ namespace Wray_Portal_Phase1.Controllers
                 // Reference to bank account
                 var bank = db.BankAccounts.Find(transaction.BankAccountId);
                 var transType = db.TransactionTypes.Find(transaction.TransactionTypeId).Type;
+                
                 if (transType == "Deposit")
                 {
                     bank.CurrentBalance += transaction.Amount;
+                    transaction.CategoryItemId = null;
+                  
                 }
                 else 
                 {

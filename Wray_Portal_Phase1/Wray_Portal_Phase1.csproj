@@ -186,8 +186,10 @@
     </Compile>
     <Compile Include="Extensions\HttpContextBaseExtension.cs" />
     <Compile Include="Helper\LayoutHelper.cs" />
+    <Compile Include="Helper\MessageHelper.cs" />
     <Compile Include="Helper\NotificationHelper.cs" />
     <Compile Include="Helper\StringUtilities.cs" />
+    <Compile Include="Helper\TransactionHelper.cs" />
     <Compile Include="Helper\UserRoleHelper.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -397,6 +399,7 @@
     <Content Include="Views\Notifications\Details.cshtml" />
     <Content Include="Views\Notifications\Edit.cshtml" />
     <Content Include="Views\Notifications\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\wrayfinancialportal - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,15 @@ namespace Wray_Portal_Phase1.Controllers
             catDataVM.Labels.AddRange(new List<string> { "Target", "Actual", "Name" });
 
             return Json(catDataVM);
+        }
+
+        public JsonResult TestCalByMonth()
+        {
+            var categoryItemId = 2;
+            var amount = db.Transactions.Where(t => t.Created.Month == DateTime.Now.Month 
+                                                                    && t.CategoryItemId == categoryItemId)
+                                                                    .Sum(t => t.Amount);
+            return Json(amount);
         }
     }
 }

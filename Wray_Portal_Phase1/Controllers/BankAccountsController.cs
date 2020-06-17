@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -10,6 +11,7 @@ using Wray_Portal_Phase1.Models;
 
 namespace Wray_Portal_Phase1.Controllers
 {
+    [Authorize(Roles = "Owner, Member")]
     public class BankAccountsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -17,8 +19,8 @@ namespace Wray_Portal_Phase1.Controllers
         // GET: BankAccounts
         public ActionResult Index()
         {
-
-            var bankAccounts = db.BankAccounts.Include(b => b.BankAccountType).Include(b => b.Household);
+            var houseId = db.Users.Find(User.Identity.GetUserId()).HouseholdId;
+            var bankAccounts = db.BankAccounts.Where(b => b.Id == houseId).Include(b => b.BankAccountType).Include(b => b.Household);
             
 
             return View(bankAccounts.ToList());
