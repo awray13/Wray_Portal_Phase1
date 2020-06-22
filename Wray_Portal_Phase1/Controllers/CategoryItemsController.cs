@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Wray_Portal_Phase1.Helper;
 using Wray_Portal_Phase1.Models;
 
 namespace Wray_Portal_Phase1.Controllers
@@ -15,6 +17,7 @@ namespace Wray_Portal_Phase1.Controllers
     public class CategoryItemsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private CategoryHelper categoryHelper = new CategoryHelper();
 
         // GET: CategoryItems
         public ActionResult Index()
@@ -42,7 +45,10 @@ namespace Wray_Portal_Phase1.Controllers
         // GET: CategoryItems/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
+            var userId = User.Identity.GetUserId();
+            var houseId = db.Users.Find(userId).HouseholdId;
+
+            ViewBag.CategoryId = new SelectList(db.Categories.Where(c => c.HouseholdId == houseId), "Id", "Name");
             return View();
         }
 
@@ -60,7 +66,13 @@ namespace Wray_Portal_Phase1.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", categoryItem.CategoryId);
+            //var userId = db.Users.Find(User.Identity.GetUserId()).HouseholdId;
+            var userId = User.Identity.GetUserId();
+            var houseId = db.Users.Find(userId).HouseholdId;
+            var categories = categoryHelper.ListHouseCategories(userId);
+            //var categories = db.Categories.Where(c => c.HouseholdId == houseId).ToList();
+
+            ViewBag.CategoryId = new SelectList(db.Categories.Where(c => c.HouseholdId == houseId), "Id", "Name", categoryItem.CategoryId);
             return View(categoryItem);
         }
 

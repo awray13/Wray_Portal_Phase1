@@ -51,7 +51,7 @@ namespace Wray_Portal_Phase1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,HouseholdId,Name,Description,TargetAmount")] Category category)
+        public ActionResult Create([Bind(Include = "Id,Name,Description,TargetAmount")] Category category)
         {
             if (ModelState.IsValid)
             {

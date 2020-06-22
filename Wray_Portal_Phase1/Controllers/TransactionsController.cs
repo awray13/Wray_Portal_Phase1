@@ -21,9 +21,9 @@ namespace Wray_Portal_Phase1.Controllers
         // GET: Transactions
         public ActionResult Index()
         {
-            
-            var houseId = db.Users.Find(User.Identity.GetUserId()).HouseholdId;
-            var transactions = db.Transactions.Where(b => b.BankAccountId == houseId).Include(t => t.BankAccount).Include(t => t.CategoryItem).Include(t => t.Owner).Include(t => t.TransactionType).ToList();
+            var userId = User.Identity.GetUserId();
+            var houseId = db.Users.Find(userId).HouseholdId;
+            var transactions = db.BankAccounts.Where(t => t.HouseholdId == houseId).SelectMany(t => t.Transactions).ToList();
            
             return View(transactions);
         }
@@ -46,8 +46,12 @@ namespace Wray_Portal_Phase1.Controllers
         // GET: Transactions/Create
         public ActionResult Create()
         {
-            ViewBag.BankAccountId = new SelectList(db.BankAccounts, "Id", "Name");
-            ViewBag.CategoryItemId = new SelectList(db.CategoryItems, "Id", "Name");
+            var user = User.Identity.GetUserId();
+            var house = db.Users.Find(user).HouseholdId;
+
+
+            ViewBag.BankAccountId = new SelectList(db.BankAccounts.Where(b => b.HouseholdId == (int)house), "Id", "Name");
+            ViewBag.CategoryItemId = new SelectList(db.CategoryItems.Where(c => c.Id == house), "Id", "Name");
             ViewBag.OwnerId = new SelectList(db.Users, "Id", "FirstName");
             ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "Id", "Type");
             return View();
@@ -62,8 +66,10 @@ namespace Wray_Portal_Phase1.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = User.Identity.GetUserId();
+                var houseId = db.Users.Find(userId).HouseholdId;
+                transaction.OwnerId = userId;
                 transaction.Created = DateTime.Now;
-                transaction.OwnerId = User.Identity.GetUserId();
                 db.Transactions.Add(transaction);
                 
 
@@ -82,8 +88,12 @@ namespace Wray_Portal_Phase1.Controllers
                 {
                     bank.CurrentBalance -= transaction.Amount;
                 }
+
+                
+
                 db.SaveChanges();
 
+                
 
 
                 // Do I need to generate a Notification for either an overdraft Or a low balance breach...?
@@ -93,8 +103,11 @@ namespace Wray_Portal_Phase1.Controllers
                 return RedirectToAction("Dashboard", "Households");
             }
 
-            ViewBag.BankAccountId = new SelectList(db.BankAccounts, "Id", "OwnerId", transaction.BankAccountId);
-            ViewBag.CategoryItemId = new SelectList(db.CategoryItems, "Id", "Name", transaction.CategoryItemId);
+            var user = User.Identity.GetUserId();
+            var house = db.Users.Find(user).HouseholdId;
+
+            ViewBag.BankAccountId = new SelectList(db.BankAccounts.Where(b => b.HouseholdId == (int)house), "Id", "OwnerId", transaction.BankAccountId);
+            ViewBag.CategoryItemId = new SelectList(db.CategoryItems.Where(c => c.CategoryId == house), "Id", "Name", transaction.CategoryItemId);
             ViewBag.OwnerId = new SelectList(db.Users, "Id", "FirstName", transaction.OwnerId);
             ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "Id", "Type", transaction.TransactionTypeId);
             return View(transaction);

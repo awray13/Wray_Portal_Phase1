@@ -65,6 +65,7 @@ namespace Wray_Portal_Phase1.Controllers
                     }
                     user.Household.IsDeleted = true;
                     user.HouseholdId = null;
+                    db.Users.Remove(user);
                     db.SaveChanges();
 
                     roleHelper.RemoveUserFromRole(userId, "Owner");
@@ -75,14 +76,17 @@ namespace Wray_Portal_Phase1.Controllers
 
                 case "Member":
                 default:
-                    user.HouseholdId = null;
+                    // Removing all user's data from the database
+                    db.Users.Remove(user);
                     db.SaveChanges();
 
-                    roleHelper.RemoveUserFromRole(userId, "Member");
-                    roleHelper.AddUserToRole(userId, "NewUser");
-                    await HttpContextBaseExtension.RefreshAuthentication(HttpContext, user);
+                    //roleHelper.RemoveUserFromRole(userId, "Member");
+                    //roleHelper.AddUserToRole(userId, "NewUser");
 
-                    return RedirectToAction("Dashboard", "Households");
+
+                    //await HttpContextBaseExtension.RefreshAuthentication(HttpContext, user);
+
+                    return RedirectToAction("Login", "Account");
             }
 
         }

@@ -20,10 +20,10 @@ namespace Wray_Portal_Phase1.Controllers
         public ActionResult Index()
         {
             var houseId = db.Users.Find(User.Identity.GetUserId()).HouseholdId;
-            var bankAccounts = db.BankAccounts.Where(b => b.Id == houseId).Include(b => b.BankAccountType).Include(b => b.Household);
+            var bankAccounts = db.BankAccounts.Where(b => b.HouseholdId == houseId).Include(b => b.BankAccountType).Include(b => b.Household).ToList();
             
 
-            return View(bankAccounts.ToList());
+            return View(bankAccounts);
         }
 
         // GET: BankAccounts/Details/5
@@ -42,9 +42,10 @@ namespace Wray_Portal_Phase1.Controllers
         }
 
         // GET: BankAccounts/Create
+        [Authorize]
         public ActionResult Create()
         {
-            ViewBag.BankAccountTypeId = new SelectList(db.BankAccountTypes, "Id", "Id");
+            ViewBag.BankAccountTypeId = new SelectList(db.BankAccountTypes, "Id", "Type");
             ViewBag.HouseholdId = new SelectList(db.Households, "Id", "Name");
             return View();
         }
@@ -54,19 +55,24 @@ namespace Wray_Portal_Phase1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "HouseholdId,BankAccountTypeId,Name,StartingBalance,CurrentBalance,LowBalanceLevel")] BankAccount bankAccount)
+        [Authorize]
+        public ActionResult Create([Bind(Include = "Id,BankAccountTypeId,Name,StartingBalance,CurrentBalance,LowBalanceLevel")] BankAccount bankAccount)
         {
             if (ModelState.IsValid)
             {
+                var userId = User.Identity.GetUserId();
+                var houseId = db.Users.Find(userId).HouseholdId;
+                bankAccount.OwnerId = userId;
                 bankAccount.Created = DateTime.Now;
+                bankAccount.HouseholdId = (int)houseId;
                 db.BankAccounts.Add(bankAccount);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.BankAccountTypeId = new SelectList(db.BankAccountTypes, "Id", "Id", bankAccount.BankAccountTypeId);
-            ViewBag.HouseholdId = new SelectList(db.Households, "Id", "Name", bankAccount.HouseholdId);
-            return View(bankAccount);
+            ViewBag.BankAccountTypeId = new SelectList(db.BankAccountTypes, "Id", "Type", bankAccount.BankAccountTypeId);
+            
+            return RedirectToAction("Index");
         }
 
         // GET: BankAccounts/Edit/5
@@ -91,6 +97,7 @@ namespace Wray_Portal_Phase1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "Id,HouseholdId,BankAccountTypeId,OwnerId,Created,Name,StartingBalance,CurrentBalance,LowBalanceLevel")] BankAccount bankAccount)
         {
             if (ModelState.IsValid)

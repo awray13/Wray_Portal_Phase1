@@ -25,8 +25,10 @@ namespace Wray_Portal_Phase1.Models
         [Display(Name = "Starting Balance")]
         public decimal StartingBalance { get; set; }
 
+        [Display(Name = "Current Balance")]
         public decimal CurrentBalance { get; set; }
 
+        [Display(Name = "Low Balance")]
         public decimal LowBalanceLevel { get; set; }
 
         // Nav props
