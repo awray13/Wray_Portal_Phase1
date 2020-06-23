@@ -15,7 +15,7 @@
             <div class="col-sm-6">
                 @if (User.IsInRole("Owner") || User.IsInRole("Member"))
                 {
-                    <h1 class="m-0 text-dark">@Model.Name Dashboard</h1>
+                    <h1 class="m-0 text-dark"><i class="fas fa-house-user"></i> @Model.Name Dashboard</h1>
                     <h5 class="text-muted">@Model.Greeting</h5>
                 }
                 else
@@ -94,7 +94,7 @@
 
                         </div>
                         <div class="icon">
-                            <i class="ion ion-person-add"></i>
+                            <i class="fas fa-layer-group"></i>
                         </div>
                         <a href="@Url.Action("Index", "Categories")" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
@@ -109,7 +109,7 @@
                             <p>Category Items</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
+                            <i class="fas fa-boxes"></i>
                         </div>
                         <a href="@Url.Action("Index", "CategoryItems")" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
@@ -125,7 +125,7 @@
                             <p>Transactions</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
+                            <i class="fas fa-barcode"></i>
                         </div>
                         <a href="@Url.Action("Index", "Transactions")" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
@@ -139,10 +139,10 @@
                 <!-- Left col -->
                 <section class="col-lg-7 connectedSortable">
                     <!-- Custom tabs (Charts with tabs)-->
-                    <div class="card">
+                    <div class="card card-success">
                         <div class="card-header">
                             <h3 class="card-title">
-                                <i class="fas fa-chart-pie mr-1"></i>
+                                <i class="fas fa-barcode mr-1"></i>
                                 Transactions
                             </h3>
                             <div class="card-tools">
@@ -213,7 +213,7 @@
                     </div>
                     <!-- /.card -->
                     <!-- Bank Accounts -->
-                    <div class="card">
+                    <div class="card card-warning">
                         <div class="card-header">
                             <h3 class="card-title">
                                 <i class="fas fa-university mr-1"></i>

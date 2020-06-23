@@ -51,7 +51,7 @@ namespace Wray_Portal_Phase1.Controllers
 
 
             ViewBag.BankAccountId = new SelectList(db.BankAccounts.Where(b => b.HouseholdId == (int)house), "Id", "Name");
-            ViewBag.CategoryItemId = new SelectList(db.CategoryItems.Where(c => c.Id == house), "Id", "Name");
+            ViewBag.CategoryItemId = new SelectList(db.Categories.Where(c => c.HouseholdId == house).SelectMany(c => c.CategoryItems), "Id", "Name");
             ViewBag.OwnerId = new SelectList(db.Users, "Id", "FirstName");
             ViewBag.TransactionTypeId = new SelectList(db.TransactionTypes, "Id", "Type");
             return View();
@@ -72,7 +72,6 @@ namespace Wray_Portal_Phase1.Controllers
                 transaction.Created = DateTime.Now;
                 db.Transactions.Add(transaction);
                 
-
                 // Do I need to update or adjust the Associated Bank Account Current Balance... Yes
                 // Reference to bank account
                 var bank = db.BankAccounts.Find(transaction.BankAccountId);
@@ -82,23 +81,15 @@ namespace Wray_Portal_Phase1.Controllers
                 {
                     bank.CurrentBalance += transaction.Amount;
                     transaction.CategoryItemId = null;
-                  
                 }
                 else 
                 {
                     bank.CurrentBalance -= transaction.Amount;
                 }
-
-                
-
                 db.SaveChanges();
-
-                
-
 
                 // Do I need to generate a Notification for either an overdraft Or a low balance breach...?
                 notificationHelper.ManageNotifications(bank, transaction);
-
 
                 return RedirectToAction("Dashboard", "Households");
             }
