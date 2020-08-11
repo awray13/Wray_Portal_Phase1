@@ -77,14 +77,15 @@ namespace Wray_Portal_Phase1.Controllers
                 case "Member":
                 default:
                     // Removing all user's data from the database
-                    db.Users.Remove(user);
-                    db.SaveChanges();
+                    // This method doesn't allow for the user to maintain their data
+                    //db.Users.Remove(user);
+                    //db.SaveChanges();
 
-                    //roleHelper.RemoveUserFromRole(userId, "Member");
-                    //roleHelper.AddUserToRole(userId, "NewUser");
+                    roleHelper.RemoveUserFromRole(userId, "Member");
+                    roleHelper.AddUserToRole(userId, "NewUser");
 
 
-                    //await HttpContextBaseExtension.RefreshAuthentication(HttpContext, user);
+                    await HttpContextBaseExtension.RefreshAuthentication(HttpContext, user);
 
                     return RedirectToAction("Login", "Account");
             }

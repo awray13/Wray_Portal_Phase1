@@ -39,24 +39,45 @@
         else if (User.IsInRole("NewUser"))
         {
             <div class="row">
-                <div class="col-6">
-                    <div class="card card-outline card-info">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <span>Welcome New User</span>
-                            </div>
+                <div class="col">
+                    <button data-toggle="modal" data-target="#createHouse" class="btn block btn-primary">Create Household</button>
+                </div>
+                <div class="col">
+                    <div data-toggle="modal" data-target="#joinHouse" class="btn block btn-warning">
+                        <div>
+                            <strong>Join Household</strong>
                         </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <button data-toggle="modal" data-target="#addAccount" class="btn block btn-success">Add Bank Account</button>
+                </div>
+            </div>
+            @*<div class="row">
+                    <div class="col-6">
+                        <div class="card card-outline card-info">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <span>Welcome New User</span>
+                                </div>
+                            </div>
 
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <button data-toggle="modal" data-target="#createHouse" class="btn btn-primary">Create House</button>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <button data-toggle="modal" data-target="#createHouse" class="btn block btn-primary">Create House</button>
+                                    </div>
+                                    <div class="col">
+                                        <button data-toggle="modal" data-target="#joinHouse" class="btn block btn-warning">Join House</button>
+                                    </div>
+                                    <div class="col">
+                                        <button data-toggle="modal" data-target="#addAccount" class="btn block btn-success">Add Bank Account</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div>*@
         }
     </div><!-- /.container-fluid -->
 </div>
@@ -353,7 +374,7 @@
                         </div>
                         <div class="card-body">
                             <div id="barChart" class="chart">
-                               
+
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -580,7 +601,7 @@
 </div>
 
 @section scripts {
-    <!-- Ajax calls -->
+
 
 
 }

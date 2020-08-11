@@ -31,8 +31,8 @@ namespace Wray_Portal_Phase1.Models
         [Display(Name = "Low Balance")]
         public decimal LowBalanceLevel { get; set; }
 
-        // Nav props
 
+        // Navigation props
         public virtual Household Household { get; set; }
         public virtual BankAccountType BankAccountType { get; set; }
         

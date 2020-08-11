@@ -16,6 +16,9 @@ namespace Wray_Portal_Phase1.Models
         public string DisplayName { get; set; }
         public string AvatarPath { get; set; }
 
+        // Here hhId is being treated as a PK and FK = foreign key constraint 
+        // when user first registers they won't have a hhId 
+        // making this nullable will help
         public int? HouseholdId { get; set; }
 
 

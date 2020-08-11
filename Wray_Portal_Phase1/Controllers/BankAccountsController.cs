@@ -11,7 +11,7 @@ using Wray_Portal_Phase1.Models;
 
 namespace Wray_Portal_Phase1.Controllers
 {
-    [Authorize(Roles = "Owner, Member")]
+    [Authorize(Roles = "Owner, Member, NewUser")]
     public class BankAccountsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

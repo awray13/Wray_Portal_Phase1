@@ -26,7 +26,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
-    with font-awesome or any other icon font library -->
+                with font-awesome or any other icon font library -->
                 <li class="nav-item has-treeview menu-open">
                     <a href="@Url.Action("Dashboard", "Households")" class="nav-link active">
                         <i class="nav-icon fas fa-th"></i>
@@ -34,6 +34,25 @@
                             Dashboard
                         </p>
                     </a>
+                </li>
+                <li class="nav-item has-treeview menu-open">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-university"></i>
+                        <p>
+                            Bank Accounts
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="@Url.Action("Create", "BankAccounts")" class="nav-link">
+                                <i class="fas fa-plus nav-icon"></i>
+                                <p>
+                                    Add Bank Account
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <!-- None of this should be available to NewUser -->
                 @if (User.IsInRole("Owner") || User.IsInRole("Member"))
@@ -66,8 +85,8 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="@Url.Action("Create", "BankAccounts")" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Create New</p>
+                                    <i class="fas fa-plus nav-icon"></i>
+                                    <p>Add Bank Account</p>
                                 </a>
                             </li>
                         </ul>
@@ -83,13 +102,13 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="@Url.Action("Create", "Categories")" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class="fas fa-plus nav-icon"></i>
                                     <p>New Category</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="@Url.Action("Create", "CategoryItems")" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class="fas fa-plus nav-icon"></i>
                                     <p>New Category Item</p>
                                 </a>
                             </li>
@@ -97,9 +116,9 @@
                     </li>
                     <li class="nav-item has-treeview">
                         <a href="@Url.Action("Create", "Transactions")" class="nav-link">
-                            <i class="nav-icon fas fa-edit"></i>
+                            <i class="fas fa-plus nav-icon"></i>
                             <p>
-                                Create Transactions
+                                New Transactions
                             </p>
                         </a>
                     </li>
